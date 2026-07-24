@@ -21,16 +21,28 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
+            
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
-        player_pos.y -= 300 * dt
+        if keys[pygame.K_a] or keys[pygame.K_s] or keys[pygame.K_d]:
+            player_pos.y -= 300 * dt * 0.7
+        else:
+            player_pos.y -= 300 * dt
     if keys[pygame.K_s]:
-        player_pos.y += 300 * dt
+        if keys[pygame.K_a] or keys[pygame.K_w] or keys[pygame.K_d]:
+            player_pos.y += 300 * dt * 0.7
+        else:
+            player_pos.y += 300 * dt
     if keys[pygame.K_a]:
-        player_pos.x -= 300 * dt
+        if keys[pygame.K_w] or keys[pygame.K_s] or keys[pygame.K_d]:
+            player_pos.x -= 300 * dt * 0.7
+        else:
+            player_pos.x -= 300 * dt
     if keys[pygame.K_d]:
-        player_pos.x += 300 * dt
+        if keys[pygame.K_a] or keys[pygame.K_s] or keys[pygame.K_w]:
+            player_pos.x += 300 * dt * 0.7
+        else:
+            player_pos.x += 300 * dt
 
     for e in enemies:
         e.update(player_pos)
