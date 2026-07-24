@@ -12,7 +12,7 @@ dt = 0
 player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 
 enemies = []
-enemies.append(Enemy((0,0)))
+enemies.append(Enemy(pygame.Vector2(0,0)))
 
 
 while running:
@@ -33,7 +33,7 @@ while running:
         player_pos.x += 300 * dt
 
     for e in enemies:
-        e.update(player_pos)
+        e.update(player_pos, dt)
 
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("purple")
