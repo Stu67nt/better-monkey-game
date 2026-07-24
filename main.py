@@ -45,7 +45,7 @@ while running:
         player_pos.x += 300 * dt
 
     for e in enemies:
-        e.update(player_pos, dt)
+        e.update(player_pos, 40, dt)
 
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("purple")
