@@ -1,18 +1,30 @@
+import random
+
 import pygame
 
 from enemy import Enemy
 
+
+SCREEN_SIZE = WIDTH, HEIGHT = (1280, 720)
+
 # pygame setup
 pygame.init()
-screen = pygame.display.set_mode((1280, 720))
+screen = pygame.display.set_mode(SCREEN_SIZE)
 clock = pygame.time.Clock()
 running = True
 dt = 0
 
-player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
+player_pos = pygame.Vector2(WIDTH / 2, HEIGHT / 2)
 
 enemies = []
-enemies.append(Enemy(pygame.Vector2(0,0)))
+
+
+for _ in range(20):
+    enemies.append(Enemy(pygame.Vector2(
+        random.randint(0,WIDTH), random.randint(0,HEIGHT)
+    )))
+
+
 
 
 while running:
