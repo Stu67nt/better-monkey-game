@@ -20,11 +20,16 @@ class Player(Sprite):
         self.shoot_cooldown = self.initial_shoot_cooldown
 
         self.rect = pygame.Rect(0,0,self.hit_radius*2, self.hit_radius*2)
-        self.image = pygame.image.load("img/banana.png")
-        self.image = pygame.transform.scale(self.image, self.rect.size)
+
+        self.initial_image = pygame.image.load("assets/img/banana.png")
+        self.initial_image = pygame.transform.scale(self.initial_image, self.rect.size)
+        self.image = self.initial_image
+
         self.rect.center = start_position
         self.speed = 600
         self.game_size = game_size
+
+        self.mirror_texture = False
 
     def update(self, *args, **kwargs):
         dt = kwargs["dt"]
@@ -46,6 +51,9 @@ class Player(Sprite):
                 self.rect.x -= self.speed * dt * 0.7
             else:
                 self.rect.x -= self.speed * dt
+
+            self.mirror_texture = False
+
         if keys[pygame.K_d]:
             if keys[pygame.K_a] or keys[pygame.K_s] or keys[pygame.K_w]:
                 self.rect.x += self.speed * dt * 0.7
@@ -58,7 +66,12 @@ class Player(Sprite):
 
         self.shoot_cooldown -= dt
 
-    def hit(self, amount:float=1):
+        if self.mirror_texture:
+            self.image = pygame.transform.flip(self.initial_image, True, False)
+        else:
+            self.image = self.initial_image
+
+    def hit(self, amount:float=0.1):
         self.health-=amount
         if self.health < 0: self.kill()
 
