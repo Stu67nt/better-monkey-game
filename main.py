@@ -18,6 +18,10 @@ clock = pygame.time.Clock()
 running = True
 dt = 0
 FPS = 60
+wave = 20
+current_enemy_spawn_counter = wave
+frame_count = 0
+
 env = Environment()
 camera = Camera(screen)
 
@@ -48,6 +52,20 @@ while running:
 
     players.update(dt=dt)
     enemies.update(player=player, dt=dt)
+    #bullets.update(dt=dt)
+
+    if env.time_progressed() % 5 == 0:
+        wave -= 1
+
+    if current_enemy_spawn_counter <= 0:
+        e = Enemy((
+            random.randint(-20, WIDTH + 20), random.randint(-20, HEIGHT +20)
+        ))
+        enemies.add(e)
+        current_enemy_spawn_counter = wave
+    else: 
+        current_enemy_spawn_counter -= 1
+
     player_bullets.update(dt=dt, enemies=enemies)
 
 
