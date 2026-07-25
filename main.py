@@ -20,6 +20,7 @@ dt = 0
 FPS = 60
 wave = 20
 current_enemy_spawn_counter = wave
+last_score = 0
 frame_count = 0
 
 env = Environment()
@@ -54,13 +55,17 @@ while running:
     enemies.update(player=player, dt=dt)
     #bullets.update(dt=dt)
 
-    if env.time_progressed() % 5 == 0:
-        wave -= 1
+    if not env.time_progressed() == last_score:
+        if env.time_progressed() % 10 == 0 and wave > 0:
+            wave -= 1
+            last_score = env.time_progressed()
+            print(wave)
+            print(env.time_progressed())
 
     if current_enemy_spawn_counter <= 0:
         e = Enemy((
-            random.randint(-20, WIDTH + 20), random.randint(-20, HEIGHT +20)
-        ))
+            random.randint(player.rect.x - 500, player.rect.x + 500), random.randint(player.rect.y - 500, player.rect.y + 500)
+        ), camera)
         enemies.add(e)
         current_enemy_spawn_counter = wave
     else: 
