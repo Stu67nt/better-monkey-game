@@ -50,8 +50,8 @@ def read_highscores(path: str):
         return scores
 
 def write_highscores(path:str, score:int):
-        with open(path, "w") as f:
-            f.write(str(score))
+    with open(path, "w") as f:
+        f.write(str(score))
 
 
 def random_coordinate_on_a_ring(center, radius, width):

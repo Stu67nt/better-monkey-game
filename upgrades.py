@@ -1,3 +1,6 @@
+import random
+from symtable import Class
+
 import pygame.draw
 from pygame import Surface, Rect
 from pygame.display import update
@@ -78,3 +81,9 @@ class FireRatePowerup(Powerup):
     UPGRADE_TYPE = Upgrades.FIRE_RATE
     IMAGE = pygame.image.load("assets/img/powerups/firerate.png")
 
+def all_powerups():
+    return [
+        SpeedPowerup, FireRatePowerup
+    ]
+def random_powerup():
+    return random.choice(all_powerups())

@@ -9,7 +9,7 @@ from environment import Environment
 from camera import Camera
 import time
 import util
-from upgrades import Upgrades, SpeedPowerup
+from upgrades import Upgrades, SpeedPowerup, random_powerup
 from util import random_coordinate_on_a_ring
 
 SCREEN_SIZE = WIDTH, HEIGHT = (1280, 720)
@@ -91,8 +91,6 @@ while running:
             env.start_time = time.time()
             pygame.mixer.music.stop()
 
-
-
     # normal logic
     if not die:
         players.update(dt=dt, bullets=player_bullets)
@@ -117,13 +115,22 @@ while running:
 
 
         if current_enemy_spawn_counter <= 0:
-
             pos = random_coordinate_on_a_ring(player.rect.center, 600, 200)
             e = Enemy(pos, camera, 700 - (wave * 30))
             enemies.add(e)
             current_enemy_spawn_counter = wave/2
         else:
             current_enemy_spawn_counter -= 1
+
+        if powerup_spawn_counter <= 0:
+            pos = random_coordinate_on_a_ring(player.rect.center, 400, 200)
+
+            powerup = random_powerup()(pos, upgrades, camera)
+            powerups.add(powerup)
+
+            powerup_spawn_counter = random.randint(10,15)
+        else:
+            powerup_spawn_counter -= dt
 
         player_bullets.update(dt=dt, enemies=enemies)
 
