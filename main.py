@@ -128,6 +128,11 @@ while running:
             powerup = random_powerup()(pos, upgrades, camera)
             powerups.add(powerup)
 
+            e = Enemy((
+                player.rect.x + enemy_x, player.rect.y + enemy_y
+            ), camera, 600 - (wave * 10), 0.07 + (0.005 * wave))
+            enemies.add(e)
+            current_enemy_spawn_counter = wave
             powerup_spawn_counter = random.randint(10,15)
         else:
             powerup_spawn_counter -= dt

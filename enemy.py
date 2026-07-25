@@ -1,14 +1,14 @@
 import pygame.draw
 from pygame import Surface, Vector2
 from pygame.sprite import Sprite
-from util import move_towards, distance
+from util import move_towards, distance, resource_path
 import os
 import random
 from player import Player
 
 
 class Enemy(Sprite):
-    def __init__(self, start_position, camera_group, speed):
+    def __init__(self, start_position, camera_group, speed, damage):
         super().__init__(camera_group)
 
         self.hit_radius = 40
@@ -16,11 +16,12 @@ class Enemy(Sprite):
 
         self.rect = pygame.Rect(0,0,self.hit_radius*2, self.hit_radius*2)
 
-        self.image = pygame.image.load(f"assets/img/monke/{self.select_sprite()}")
+        self.image = pygame.image.load(resource_path(f"assets/img/monke/{self.select_sprite()}"))
         self.image = pygame.transform.scale(self.image, self.rect.size)
 
         self.rect.center = start_position
         self.speed = speed
+        self.damage = damage
 
         self.suicide_counter = 700
 
@@ -37,7 +38,7 @@ class Enemy(Sprite):
 
         dist_to_player = distance(player.rect.center, self.rect.center)
         if dist_to_player < (self.hit_radius + player.hit_radius):
-            player.hit(0.07)
+            player.hit(self.damage)
 
         self.suicide_counter -= 1
         if self.suicide_counter <= 0:

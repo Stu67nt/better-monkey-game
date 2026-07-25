@@ -1,4 +1,5 @@
 import math
+import sys, os
 import random
 
 
@@ -42,13 +43,37 @@ def clamp(n, min, max):
     else:
         return n
     
+def get_writable_path(filename: str) -> str:
+    if getattr(sys, "frozen", False):
+        base = os.path.dirname(sys.executable)
+    else:
+        base = os.path.abspath(".")
+    return os.path.join(base, filename)
+
+
 def read_highscores(path: str):
     scores = []
-    with open(path, "r") as f:
-        for line in f.readlines():
-            scores.append(int(line))
+    if not os.path.exists(path):
         return scores
 
+    with open(path, "r") as f:
+        for line in f.readlines():
+            line = line.strip()
+            if line:
+                scores.append(int(line))
+    return scores
+
+
+def write_highscores(path: str, score: int):
+    with open(path, "w") as f:
+        f.write(str(score))
+            
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except AttributeError:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
 def write_highscores(path:str, score:int):
     with open(path, "w") as f:
         f.write(str(score))
