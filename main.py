@@ -6,6 +6,7 @@ from bullet import Bullet
 from enemy import Enemy
 from player import Player
 from environment import Environment
+import time
 
 SCREEN_SIZE = WIDTH, HEIGHT = (1280, 720)
 
@@ -16,7 +17,7 @@ clock = pygame.time.Clock()
 running = True
 dt = 0
 FPS = 60
-env = Environment(clock, FPS)
+env = Environment()
 
 player = Player((WIDTH/2, HEIGHT/2))
 players = Group()
@@ -34,9 +35,7 @@ for _ in range(20):
     ))
     enemies.add(e)
 
-
-
-
+env.start_time = time.time()
 while running:
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
@@ -58,7 +57,6 @@ while running:
     enemies.draw(screen)
     bullets.draw(screen)
 
-    env.frame_count += 1
     screen.blit(env.get_time_text(screen), (0, 0))
 
     # flip() the display to put your work on screen
