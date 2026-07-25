@@ -47,6 +47,9 @@ while running:
     enemies.update(player=player, dt=dt)
     bullets.update(dt=dt)
 
+    hits = pygame.sprite.spritecollide(player, enemies, dokill=False)
+    for monkey in hits: player.hit(0.01)
+
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("white")
     #pygame.draw.circle(screen, "green", player.pos, 40)
