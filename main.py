@@ -32,9 +32,7 @@ players.add(player)
 
 enemies = Group()
 
-player_bullets = Group()
-test_bullet = PlayerBullet((WIDTH/2, HEIGHT/2), (0,1), camera)
-
+player_bullets = Group()sss
 env.start_time = time.time()
 
 while running:
