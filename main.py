@@ -60,8 +60,9 @@ while running:
         e.update(player_pos, dt)
 
     # fill the screen with a color to wipe away anything from last frame
-    screen.fill("purple")
-    pygame.draw.circle(screen, "green", player_pos, 40)
+    screen.fill("green")
+    env.tileBackground(screen, env.bg)
+    pygame.draw.circle(screen, "orange", player_pos, 40)
 
 
     for e in enemies:
