@@ -21,3 +21,6 @@ def move_towards(current, target, speed, dt):
     ny = dy / distance
 
     return (cx + nx * step, cy + ny * step)
+
+def distance(A:tuple,B:tuple):
+    return math.hypot(A[0]-B[0],A[1]-B[1])

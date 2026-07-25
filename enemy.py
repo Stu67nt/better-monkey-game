@@ -1,7 +1,7 @@
 import pygame.draw
 from pygame import Surface, Vector2
 from pygame.sprite import Sprite
-from util import move_towards
+from util import move_towards, distance
 
 from player import Player
 
@@ -27,8 +27,9 @@ class Enemy(Sprite):
         pygame.draw.circle(surface, "red", self.rect.center, 40)
 
     def update(self, *args, **kwargs):
-        self.rect.center = move_towards(self.rect.center, kwargs["player"].rect.center, self.speed, kwargs["dt"])
+        player = kwargs["player"]
+        self.rect.center = move_towards(self.rect.center, player.rect.center, self.speed, kwargs["dt"])
 
-        #dist_to_player = self.rect.distance_to(player.pos)
-        #if dist_to_player < (self.hit_radius + player.hit_radius):
-        #    self.kill()
+        dist_to_player = distance(player.rect.center, self.rect.center)
+        if dist_to_player < (self.hit_radius + player.hit_radius):
+            self.kill()

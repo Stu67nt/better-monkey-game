@@ -4,6 +4,7 @@ import pygame
 from pygame import Vector2
 from pygame.sprite import Group
 
+from bullet import Bullet
 from enemy import Enemy
 from player import Player
 
@@ -16,16 +17,21 @@ clock = pygame.time.Clock()
 running = True
 dt = 0
 
-player = Player(Vector2(WIDTH/2, HEIGHT/2))
+player = Player((WIDTH/2, HEIGHT/2))
 players = Group()
 players.add(player)
 
 enemies = Group()
 
+bullets = Group()
+test_bullet = Bullet((WIDTH/2, HEIGHT/2), (0,1))
+bullets.add(test_bullet)
+
 for _ in range(20):
-    enemies.add(Enemy((
+    e = Enemy((
         random.randint(0,WIDTH), random.randint(0,HEIGHT)
-    )))
+    ))
+    enemies.add(e)
 
 
 
@@ -39,7 +45,7 @@ while running:
 
     players.update(dt=dt)
     enemies.update(player=player, dt=dt)
-
+    bullets.update(dt=dt)
 
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("white")
@@ -47,6 +53,7 @@ while running:
 
     players.draw(screen)
     enemies.draw(screen)
+    bullets.draw(screen)
 
     # flip() the display to put your work on screen
     pygame.display.flip()

@@ -9,6 +9,7 @@ class Player(Sprite):
 
         self.hit_radius = 40
 
+        self.health = 1
 
         self.rect = pygame.Rect(0,0,self.hit_radius*2, self.hit_radius*2)
         self.image = pygame.image.load("img/monkey.gif")
@@ -28,3 +29,7 @@ class Player(Sprite):
             self.rect.x -= 300 * dt
         if keys[pygame.K_d]:
             self.rect.x += 300 * dt
+
+    def hit(self, amount:float=0.1):
+        self.health-=amount
+        if self.health < 0: self.kill()
