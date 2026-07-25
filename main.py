@@ -8,6 +8,7 @@ from player import Player
 from environment import Environment
 from camera import Camera
 import time
+import util
 
 SCREEN_SIZE = WIDTH, HEIGHT = (1280, 720)
 
@@ -61,9 +62,18 @@ while running:
             print(env.time_progressed())
 
     if current_enemy_spawn_counter <= 0:
+
+        enemy_x = random.randint(-800, 800)
+        if abs(enemy_x) < 600:
+            enemy_x = 600
+
+        enemy_y = random.randint(-800, 800)
+        if abs(enemy_y) < 600:
+            enemy_y = 600       
+
         e = Enemy((
-            random.randint(player.rect.x - 500, player.rect.x + 500), random.randint(player.rect.y - 500, player.rect.y + 500)
-        ), camera)
+            player.rect.x + enemy_x, player.rect.y + enemy_y
+        ), camera, 700 - (wave * 10))
         enemies.add(e)
         current_enemy_spawn_counter = wave
     else: 

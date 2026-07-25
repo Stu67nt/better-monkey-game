@@ -8,7 +8,7 @@ from player import Player
 
 
 class Enemy(Sprite):
-    def __init__(self, start_position, camera_group):
+    def __init__(self, start_position, camera_group, speed):
         super().__init__(camera_group)
 
         self.hit_radius = 40
@@ -20,9 +20,9 @@ class Enemy(Sprite):
         self.image = pygame.transform.scale(self.image, self.rect.size)
 
         self.rect.center = start_position
-        self.speed = 100
+        self.speed = speed
 
-        self.suicide_counter = 500
+        self.suicide_counter = 700
 
     def select_sprite(self):
         choices = os.listdir("assets\\img\\monke")
