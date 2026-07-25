@@ -54,22 +54,14 @@ while running:
     hits = pygame.sprite.spritecollide(player, enemies, dokill=False)
     for monkey in hits: player.hit(0.01)
 
-#    hits =
+    # =====================
+    # ------RENDERING------
+    # =====================
 
-    # fill the screen with a color to wipe away anything from last frame
     screen.fill("green")
-    env.tileBackground(screen, env.bg)
-    # pygame.draw.circle(screen, "orange", player_pos, 40)
-
-
-    #players.draw(screen)
-    #enemies.draw(screen)
-    #player_bullets.draw(screen)
-
-    # screen.blit(env.get_time_text(screen), (0, 0))
+    env.tileBackground(screen, env.bg, camera.offset)
 
     camera.new_draw(player.rect)
-    # flip() the display to put your work on screen
     pygame.display.flip()
 
     # limits FPS to 60
