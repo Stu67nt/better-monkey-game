@@ -7,7 +7,7 @@ class Environment:
 		self.fps = fps
 		self.frame_count = 0
 		self.time_font = pygame.font.SysFont('Arial', 30)
-		self.bg = pygame.image.load("assets/grass.png")
+		self.bg = pygame.image.load("img/grass.png")
 
 		pygame.font.init()
 
