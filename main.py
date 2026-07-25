@@ -8,6 +8,7 @@ screen = pygame.display.set_mode((1280, 720))
 clock = pygame.time.Clock()
 running = True
 dt = 0
+player_speed = 600
 
 player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 
@@ -25,24 +26,24 @@ while running:
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
         if keys[pygame.K_a] or keys[pygame.K_s] or keys[pygame.K_d]:
-            player_pos.y -= 300 * dt * 0.7
+            player_pos.y -= player_speed * dt * 0.7
         else:
-            player_pos.y -= 300 * dt
+            player_pos.y -= player_speed * dt
     if keys[pygame.K_s]:
         if keys[pygame.K_a] or keys[pygame.K_w] or keys[pygame.K_d]:
-            player_pos.y += 300 * dt * 0.7
+            player_pos.y += player_speed * dt * 0.7
         else:
-            player_pos.y += 300 * dt
+            player_pos.y += player_speed * dt
     if keys[pygame.K_a]:
         if keys[pygame.K_w] or keys[pygame.K_s] or keys[pygame.K_d]:
-            player_pos.x -= 300 * dt * 0.7
+            player_pos.x -= player_speed * dt * 0.7
         else:
-            player_pos.x -= 300 * dt
+            player_pos.x -= player_speed * dt
     if keys[pygame.K_d]:
         if keys[pygame.K_a] or keys[pygame.K_s] or keys[pygame.K_w]:
-            player_pos.x += 300 * dt * 0.7
+            player_pos.x += player_speed * dt * 0.7
         else:
-            player_pos.x += 300 * dt
+            player_pos.x += player_speed * dt
 
     for e in enemies:
         e.update(player_pos)
