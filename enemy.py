@@ -7,8 +7,8 @@ from player import Player
 
 
 class Enemy(Sprite):
-    def __init__(self, start_position):
-        super().__init__()
+    def __init__(self, start_position, camera_group):
+        super().__init__(camera_group)
 
         self.hit_radius = 40
 

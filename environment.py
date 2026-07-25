@@ -1,18 +1,17 @@
 import pygame
 import math
+import time
 
 class Environment:
-	def __init__(self, clock, fps):
-		self.clock = clock
-		self.fps = fps
-		self.frame_count = 0
+	def __init__(self):
 		self.time_font = pygame.font.SysFont('Arial', 30)
 		self.bg = pygame.image.load("img/grass.png")
+		self.start_time = 0
 
 		pygame.font.init()
 
-	def time_progressed(self):
-		return self.frame_count//self.fps
+	def time_progressed(self) -> int:
+		return math.floor(time.time() - self.start_time)
 
 	def get_time_text(self, screen):
 		return self.time_font.render(f"Time survived: {self.time_progressed()}", True, (0, 0, 0))

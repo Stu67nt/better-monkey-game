@@ -4,8 +4,8 @@ from pygame.sprite import Sprite
 
 
 class Player(Sprite):
-    def __init__(self, start_position:tuple[int,int], game_size: tuple[int, int]):
-        super().__init__()
+    def __init__(self, start_position:tuple[int,int], game_size: tuple[int, int], camera_group):
+        super().__init__(camera_group)
 
         self.hit_radius = 40
 
