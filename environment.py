@@ -7,10 +7,12 @@ import util
 class Environment:
 	def __init__(self):
 		self.time_font = pygame.font.SysFont('Arial', 30)
-		self.bg = pygame.image.load("assets/img/grass.png")
+		self.bg = pygame.image.load("assets/img/grass.jpg")
 		self.start_time = 0
-		self.bg = pygame.transform.scale_by(self.bg, 5)
+
 		pygame.mixer.init()
+		self.bg = pygame.transform.scale_by(self.bg, 0.7)
+
 		pygame.font.init()
 
 	def time_progressed(self) -> int:

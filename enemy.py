@@ -37,7 +37,7 @@ class Enemy(Sprite):
 
         dist_to_player = distance(player.rect.center, self.rect.center)
         if dist_to_player < (self.hit_radius + player.hit_radius):
-            player.hit(0.05)
+            player.hit(0.07)
 
         self.suicide_counter -= 1
         if self.suicide_counter <= 0:

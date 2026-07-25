@@ -9,6 +9,7 @@ from environment import Environment
 from camera import Camera
 import time
 import util
+from upgrades import Upgrades
 
 SCREEN_SIZE = WIDTH, HEIGHT = (1280, 720)
 
@@ -31,6 +32,8 @@ camera = Camera(screen)
 player = Player((WIDTH/2, HEIGHT/2), (WIDTH, HEIGHT), camera)
 players = Group()
 players.add(player)
+
+upgrades = Upgrades()
 
 enemies = Group()
 
@@ -83,6 +86,7 @@ while running:
     #    random.randint(0, WIDTH), random.randint(0, HEIGHT)
     #), camera)
     #enemies.add(e)
+
     if not die:
         players.update(dt=dt, bullets=player_bullets)
         enemies.update(player=player, dt=dt)
@@ -94,6 +98,19 @@ while running:
                 last_score = env.time_progressed()
                 print(wave)
                 print(env.time_progressed())
+
+      upgrades.apply(player)
+
+
+      players.update(dt=dt, bullets=player_bullets)
+      enemies.update(player=player, dt=dt)
+      #bullets.update(dt=dt)
+
+      if not env.time_progressed() == last_score:
+          if env.time_progressed() % 10 == 0 and wave > 0:
+              wave -= 1
+              last_score = env.time_progressed()
+
 
         if current_enemy_spawn_counter <= 0:
 
