@@ -6,6 +6,7 @@ from bullet import Bullet
 from enemy import Enemy
 from player import Player
 from environment import Environment
+from camera import Camera
 import time
 
 SCREEN_SIZE = WIDTH, HEIGHT = (1280, 720)
@@ -18,8 +19,9 @@ running = True
 dt = 0
 FPS = 60
 env = Environment()
+camera = Camera(screen)
 
-player = Player((WIDTH/2, HEIGHT/2), (WIDTH, HEIGHT))
+player = Player((WIDTH/2, HEIGHT/2), (WIDTH, HEIGHT), camera)
 players = Group()
 players.add(player)
 
@@ -31,11 +33,11 @@ bullets.add(test_bullet)
 
 for _ in range(20):
     e = Enemy((
-        random.randint(0,WIDTH), random.randint(0,HEIGHT)
-    ))
+        random.randint(0,WIDTH), random.randint(0,HEIGHT)), camera)
     enemies.add(e)
 
 env.start_time = time.time()
+
 while running:
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
@@ -53,12 +55,13 @@ while running:
     # pygame.draw.circle(screen, "orange", player_pos, 40)
 
 
-    players.draw(screen)
-    enemies.draw(screen)
-    bullets.draw(screen)
+    # players.draw(screen)
+    # enemies.draw(screen)
+    # bullets.draw(screen)
 
-    screen.blit(env.get_time_text(screen), (0, 0))
+    # screen.blit(env.get_time_text(screen), (0, 0))
 
+    camera.new_draw(player.rect)
     # flip() the display to put your work on screen
     pygame.display.flip()
 

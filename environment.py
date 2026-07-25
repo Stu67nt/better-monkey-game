@@ -10,11 +10,11 @@ class Environment:
 
 		pygame.font.init()
 
-	def time_progressed(self):
-		return time.time() - self.start_time
+	def time_progressed(self) -> int:
+		return math.floor(time.time() - self.start_time)
 
 	def get_time_text(self, screen):
-		return self.time_font.render(f"Time survived: {math.floor(self.time_progressed())}", True, (0, 0, 0))
+		return self.time_font.render(f"Time survived: {self.time_progressed()}", True, (0, 0, 0))
 
 	def tileBackground(self, screen, image):
 		# Shamelessly stolen from stack overflow
