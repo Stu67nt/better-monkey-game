@@ -17,6 +17,10 @@ running = True
 dt = 0
 FPS = 60
 env = Environment(clock, FPS)
+wave = 20
+current_enemy_spawn_counter = wave
+frame_count = 0
+
 
 player = Player((WIDTH/2, HEIGHT/2), (WIDTH, HEIGHT))
 players = Group()
@@ -24,17 +28,9 @@ players.add(player)
 
 enemies = Group()
 
-bullets = Group()
-test_bullet = Bullet((WIDTH/2, HEIGHT/2), (0,1))
-bullets.add(test_bullet)
-
-for _ in range(20):
-    e = Enemy((
-        random.randint(0,WIDTH), random.randint(0,HEIGHT)
-    ))
-    enemies.add(e)
-
-
+#bullets = Group()
+#test_bullet = Bullet((WIDTH/2, HEIGHT/2), (0,1))
+#bullets.add(test_bullet)
 
 
 while running:
@@ -46,7 +42,20 @@ while running:
 
     players.update(dt=dt)
     enemies.update(player=player, dt=dt)
-    bullets.update(dt=dt)
+    #bullets.update(dt=dt)
+
+    if env.time_progressed() % 5 == 0:
+        wave -= 1
+
+    if current_enemy_spawn_counter <= 0:
+        e = Enemy((
+            random.randint(-20, WIDTH + 20), random.randint(-20, HEIGHT +20)
+        ))
+        enemies.add(e)
+        current_enemy_spawn_counter = wave
+    else: 
+        current_enemy_spawn_counter -= 1
+
 
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("green")
@@ -56,7 +65,7 @@ while running:
 
     players.draw(screen)
     enemies.draw(screen)
-    bullets.draw(screen)
+    #bullets.draw(screen)
 
     env.frame_count += 1
     screen.blit(env.get_time_text(screen), (0, 0))

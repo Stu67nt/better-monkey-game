@@ -21,6 +21,8 @@ class Enemy(Sprite):
         self.rect.center = start_position
         self.speed = 100
 
+        self.suicide_counter = 100
+
 
 
     def render(self, surface: Surface):
@@ -32,4 +34,8 @@ class Enemy(Sprite):
 
         dist_to_player = distance(player.rect.center, self.rect.center)
         if dist_to_player < (self.hit_radius + player.hit_radius):
+            self.kill()
+
+        self.suicide_counter -= 1
+        if self.suicide_counter <= 0:
             self.kill()
