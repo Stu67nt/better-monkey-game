@@ -17,7 +17,7 @@ class Player(Sprite):
         self.health = 100
 
         self.rect = pygame.Rect(0,0,self.hit_radius*2, self.hit_radius*2)
-        self.image = pygame.image.load("img/banana.png")
+        self.image = pygame.image.load("assets/img/banana.png")
         self.image = pygame.transform.scale(self.image, self.rect.size)
         self.rect.center = start_position
         self.speed = 600
