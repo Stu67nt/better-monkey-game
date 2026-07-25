@@ -16,7 +16,7 @@ class PlayerBullet(Sprite):
         self.rect.center = start_position
 
 
-        self.initial_image = pygame.image.load("img/banana.png")
+        self.initial_image = pygame.image.load("assets/img/banana.png")
         self.initial_image = pygame.transform.scale(self.initial_image, self.rect.size)
         self.image = self.initial_image
 
