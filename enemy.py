@@ -21,7 +21,7 @@ class Enemy(Sprite):
         self.rect.center = start_position
         self.speed = 100
 
-        self.suicide_counter = 100
+        self.suicide_counter = 500
 
 
 
