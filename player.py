@@ -2,6 +2,9 @@ import pygame
 from pygame import Vector2
 from pygame.sprite import Sprite
 
+from playerBullet import PlayerBullet
+from util import direction_to
+
 
 class Player(Sprite):
     def __init__(self, start_position:tuple[int,int], game_size: tuple[int, int], camera_group):
@@ -9,7 +12,7 @@ class Player(Sprite):
 
         self.hit_radius = 40
 
-        self.health = 1
+        self.health = 100
 
         self.rect = pygame.Rect(0,0,self.hit_radius*2, self.hit_radius*2)
         self.image = pygame.image.load("img/banana.png")
@@ -46,3 +49,12 @@ class Player(Sprite):
     def hit(self, amount:float=0.1):
         self.health-=amount
         if self.health < 0: self.kill()
+
+        print("player health: ", self.health)
+
+    def throw_banana(self, banana_group):
+        mouse = pygame.mouse.get_pos()
+        mouse_direction = direction_to(self.rect.center, mouse)
+        banana_group.add(PlayerBullet(
+           self.rect.center, mouse_direction
+        ))

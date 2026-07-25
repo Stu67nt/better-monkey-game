@@ -7,6 +7,7 @@ class Environment:
 		self.time_font = pygame.font.SysFont('Arial', 30)
 		self.bg = pygame.image.load("img/grass.png")
 		self.start_time = 0
+		self.bg = pygame.transform.scale_by(self.bg, 3)
 
 		pygame.font.init()
 
