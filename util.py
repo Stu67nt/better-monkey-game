@@ -42,7 +42,7 @@ def clamp(n, min, max):
     
 def read_highscores(path: str):
     scores = []
-    with open(path, "r") as f:
+    with open(path, "a") as f:
         for line in f.read():
             scores.append(line)
         return scores
