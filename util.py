@@ -39,3 +39,15 @@ def clamp(n, min, max):
         return max
     else:
         return n
+    
+def read_highscores(path: str):
+    scores = []
+    with open(path, "r") as f:
+        for line in f.read():
+            scores.append(line)
+        return scores
+    
+def write_highscores(path:str, score:int):
+        with open(path, "r") as f:
+            f.write(str(score))
+            
