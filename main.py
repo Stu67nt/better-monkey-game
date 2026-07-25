@@ -46,6 +46,11 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN:
             player.throw_banana(player_bullets)
 
+    e = Enemy((
+        random.randint(0, WIDTH), random.randint(0, HEIGHT)
+    ))
+    enemies.add(e)
+
     players.update(dt=dt)
     enemies.update(player=player, dt=dt)
     player_bullets.update(dt=dt, enemies=enemies)
