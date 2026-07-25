@@ -6,6 +6,8 @@ from playerBullet import PlayerBullet
 from enemy import Enemy
 from player import Player
 from environment import Environment
+from camera import Camera
+import time
 
 SCREEN_SIZE = WIDTH, HEIGHT = (1280, 720)
 
@@ -16,26 +18,19 @@ clock = pygame.time.Clock()
 running = True
 dt = 0
 FPS = 60
-env = Environment(clock, FPS)
+env = Environment()
+camera = Camera(screen)
 
-player = Player((WIDTH/2, HEIGHT/2), (WIDTH, HEIGHT))
+player = Player((WIDTH/2, HEIGHT/2), (WIDTH, HEIGHT), camera)
 players = Group()
 players.add(player)
 
 enemies = Group()
 
 player_bullets = Group()
-test_bullet = PlayerBullet((WIDTH/2, HEIGHT/2), (0,1))
-player_bullets.add(test_bullet)
+test_bullet = PlayerBullet((WIDTH/2, HEIGHT/2), (0,1), camera)
 
-for _ in range(20):
-    e = Enemy((
-        random.randint(0,WIDTH), random.randint(0,HEIGHT)
-    ))
-    enemies.add(e)
-
-
-
+env.start_time = time.time()
 
 while running:
     # poll for events
@@ -48,7 +43,7 @@ while running:
 
     e = Enemy((
         random.randint(0, WIDTH), random.randint(0, HEIGHT)
-    ))
+    ), camera)
     enemies.add(e)
 
     players.update(dt=dt)
@@ -67,13 +62,13 @@ while running:
     # pygame.draw.circle(screen, "orange", player_pos, 40)
 
 
-    players.draw(screen)
-    enemies.draw(screen)
-    player_bullets.draw(screen)
+    #players.draw(screen)
+    #enemies.draw(screen)
+    #player_bullets.draw(screen)
 
-    env.frame_count += 1
-    screen.blit(env.get_time_text(screen), (0, 0))
+    # screen.blit(env.get_time_text(screen), (0, 0))
 
+    camera.new_draw(player.rect)
     # flip() the display to put your work on screen
     pygame.display.flip()
 
