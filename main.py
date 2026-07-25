@@ -124,7 +124,7 @@ while running:
 
             e = Enemy((
                 player.rect.x + enemy_x, player.rect.y + enemy_y
-            ), camera, 700 - (wave * 10))
+            ), camera, 600 - (wave * 10), 0.07 + (0.005 * wave))
             enemies.add(e)
             current_enemy_spawn_counter = wave
         else:
