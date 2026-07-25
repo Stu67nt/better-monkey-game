@@ -7,7 +7,7 @@ import util
 class Environment:
 	def __init__(self):
 		self.time_font = pygame.font.SysFont('Arial', 30)
-		self.bg = pygame.image.load("assets/img/grass.jpg")
+		self.bg = pygame.image.load(util.resource_path("assets/img/grass.jpg"))
 		self.start_time = 0
 
 		pygame.mixer.init()
@@ -43,7 +43,7 @@ class Environment:
 
 	def deathscreen(self, screen, score, old_high):
 		screen.fill("black")
-		win = pygame.image.load("assets/img/deathscreens/death.png")
+		win = pygame.image.load(util.resource_path("assets/img/deathscreens/death.png"))
 		win_rect = win.get_rect(topleft=(0, 0))
 		screen.blit(win, win_rect)
 		if old_high < self.time_progressed():

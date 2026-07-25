@@ -1,7 +1,7 @@
 import pygame.draw
 from pygame import Surface, Vector2
 from pygame.sprite import Sprite
-from util import move_towards, distance
+from util import move_towards, distance, resource_path
 import os
 import random
 from player import Player
@@ -16,7 +16,7 @@ class Enemy(Sprite):
 
         self.rect = pygame.Rect(0,0,self.hit_radius*2, self.hit_radius*2)
 
-        self.image = pygame.image.load(f"assets/img/monke/{self.select_sprite()}")
+        self.image = pygame.image.load(resource_path(f"assets/img/monke/{self.select_sprite()}"))
         self.image = pygame.transform.scale(self.image, self.rect.size)
 
         self.rect.center = start_position
