@@ -52,7 +52,7 @@ class Player(Sprite):
         self.health-=amount
         if self.health < 0: self.kill()
 
-        print("player health: ", self.health)
+        #print("player health: ", self.health)
 
     def throw_banana(self, banana_group):
         mouse = pygame.mouse.get_pos()
