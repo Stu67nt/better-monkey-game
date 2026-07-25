@@ -16,6 +16,9 @@ class Player(Sprite):
 
         self.health = 100
 
+        self.initial_shoot_cooldown = 0.1
+        self.shoot_cooldown = self.initial_shoot_cooldown
+
         self.rect = pygame.Rect(0,0,self.hit_radius*2, self.hit_radius*2)
 
         self.initial_image = pygame.image.load("assets/img/banana.png")
@@ -30,6 +33,7 @@ class Player(Sprite):
 
     def update(self, *args, **kwargs):
         dt = kwargs["dt"]
+        bullets_group = kwargs["bullets"]
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_w]:
@@ -58,7 +62,11 @@ class Player(Sprite):
 
             self.mirror_texture = True
 
+        if pygame.mouse.get_pressed(3)[0]:
+            self.throw_banana(bullets_group)
 
+
+        self.shoot_cooldown -= dt
 
         if self.mirror_texture:
             self.image = pygame.transform.flip(self.initial_image, True, False)
@@ -69,9 +77,12 @@ class Player(Sprite):
         self.health-=amount
         if self.health < 0: self.kill()
 
-        #print("player health: ", self.health)
+        print("player health: ", self.health)
 
     def throw_banana(self, banana_group):
+
+        if self.shoot_cooldown > 0: return
+
         mouse = pygame.mouse.get_pos()
         mouse = (mouse[0]+self.camera_group.offset[0], mouse[1]+self.camera_group.offset[1])
 
@@ -79,3 +90,6 @@ class Player(Sprite):
         banana_group.add(PlayerBullet(
            self.rect.center, mouse_direction, self.camera_group
         ))
+
+        self.shoot_cooldown = self.initial_shoot_cooldown
+
