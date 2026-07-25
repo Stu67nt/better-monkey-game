@@ -1,9 +1,7 @@
 import random
-
 import pygame
-
 from enemy import Enemy
-
+from environment import Environment
 
 SCREEN_SIZE = WIDTH, HEIGHT = (1280, 720)
 
@@ -13,6 +11,8 @@ screen = pygame.display.set_mode(SCREEN_SIZE)
 clock = pygame.time.Clock()
 running = True
 dt = 0
+FPS = 60
+env = Environment(clock, FPS)
 
 player_pos = pygame.Vector2(WIDTH / 2, HEIGHT / 2)
 
@@ -63,8 +63,12 @@ while running:
     screen.fill("purple")
     pygame.draw.circle(screen, "green", player_pos, 40)
 
+
     for e in enemies:
         e.render(screen)
+
+    env.frame_count += 1
+    screen.blit(env.get_time_text(screen), (0, 0))
 
     # flip() the display to put your work on screen
     pygame.display.flip()
@@ -72,6 +76,7 @@ while running:
     # limits FPS to 60
     # dt is delta time in seconds since last frame, used for framerate-
     # independent physics.
-    dt = clock.tick(60) / 1000
+
+    dt = clock.tick(FPS) / 1000
 
 pygame.quit()
