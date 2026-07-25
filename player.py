@@ -2,6 +2,9 @@ import pygame
 from pygame import Vector2
 from pygame.sprite import Sprite
 
+from playerBullet import PlayerBullet
+from util import direction_to
+
 
 class Player(Sprite):
     def __init__(self, start_position:tuple[int,int], game_size: tuple[int, int]):
@@ -48,3 +51,10 @@ class Player(Sprite):
         if self.health < 0: self.kill()
 
         print("player health: ", self.health)
+
+    def throw_banana(self, banana_group):
+        mouse = pygame.mouse.get_pos()
+        mouse_direction = direction_to(self.rect.center, mouse)
+        banana_group.add(PlayerBullet(
+           self.rect.center, mouse_direction
+        ))

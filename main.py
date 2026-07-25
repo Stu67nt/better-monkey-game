@@ -2,7 +2,7 @@ import random
 import pygame
 from pygame import Vector2
 from pygame.sprite import Group
-from bullet import Bullet
+from playerBullet import PlayerBullet
 from enemy import Enemy
 from player import Player
 from environment import Environment
@@ -24,9 +24,9 @@ players.add(player)
 
 enemies = Group()
 
-bullets = Group()
-test_bullet = Bullet((WIDTH/2, HEIGHT/2), (0,1))
-bullets.add(test_bullet)
+player_bullets = Group()
+test_bullet = PlayerBullet((WIDTH/2, HEIGHT/2), (0,1))
+player_bullets.add(test_bullet)
 
 for _ in range(20):
     e = Enemy((
@@ -43,13 +43,18 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            player.throw_banana(player_bullets)
 
     players.update(dt=dt)
     enemies.update(player=player, dt=dt)
-    bullets.update(dt=dt)
+    player_bullets.update(dt=dt, enemies=enemies)
+
 
     hits = pygame.sprite.spritecollide(player, enemies, dokill=False)
     for monkey in hits: player.hit(0.01)
+
+#    hits =
 
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("green")
@@ -59,7 +64,7 @@ while running:
 
     players.draw(screen)
     enemies.draw(screen)
-    bullets.draw(screen)
+    player_bullets.draw(screen)
 
     env.frame_count += 1
     screen.blit(env.get_time_text(screen), (0, 0))
