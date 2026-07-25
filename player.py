@@ -10,6 +10,8 @@ class Player(Sprite):
     def __init__(self, start_position:tuple[int,int], game_size: tuple[int, int], camera_group):
         super().__init__(camera_group)
 
+        self.camera_group = camera_group
+
         self.hit_radius = 40
 
         self.health = 100
@@ -56,5 +58,5 @@ class Player(Sprite):
         mouse = pygame.mouse.get_pos()
         mouse_direction = direction_to(self.rect.center, mouse)
         banana_group.add(PlayerBullet(
-           self.rect.center, mouse_direction
+           self.rect.center, mouse_direction, self.camera_group
         ))

@@ -6,8 +6,8 @@ from util import distance
 
 
 class PlayerBullet(Sprite):
-    def __init__(self, start_position:tuple[int,int], vector:tuple[int,int]):
-        super().__init__()
+    def __init__(self, start_position:tuple[int,int], vector:tuple[int,int], camera_group):
+        super().__init__(camera_group)
 
         self.direction_vector = vector
         self.rect = Rect(

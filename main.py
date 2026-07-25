@@ -28,13 +28,7 @@ players.add(player)
 enemies = Group()
 
 player_bullets = Group()
-test_bullet = PlayerBullet((WIDTH/2, HEIGHT/2), (0,1))
-player_bullets.add(test_bullet)
-
-for _ in range(20):
-    e = Enemy((
-        random.randint(0,WIDTH), random.randint(0,HEIGHT)), camera)
-    enemies.add(e)
+test_bullet = PlayerBullet((WIDTH/2, HEIGHT/2), (0,1), camera)
 
 env.start_time = time.time()
 
@@ -49,7 +43,7 @@ while running:
 
     e = Enemy((
         random.randint(0, WIDTH), random.randint(0, HEIGHT)
-    ))
+    ), camera)
     enemies.add(e)
 
     players.update(dt=dt)
@@ -68,9 +62,9 @@ while running:
     # pygame.draw.circle(screen, "orange", player_pos, 40)
 
 
-    players.draw(screen)
-    enemies.draw(screen)
-    player_bullets.draw(screen)
+    #players.draw(screen)
+    #enemies.draw(screen)
+    #player_bullets.draw(screen)
 
     # screen.blit(env.get_time_text(screen), (0, 0))
 
