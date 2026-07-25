@@ -24,3 +24,10 @@ def move_towards(current, target, speed, dt):
 
 def distance(A:tuple,B:tuple):
     return math.hypot(A[0]-B[0],A[1]-B[1])
+
+def direction_to(a, b):
+    delta = [bi - ai for ai, bi in zip(a, b)]
+    length = math.sqrt(sum(d * d for d in delta))
+    if length == 0:
+        return delta
+    return [d / length for d in delta]

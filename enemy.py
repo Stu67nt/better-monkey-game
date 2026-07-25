@@ -7,8 +7,8 @@ from player import Player
 
 
 class Enemy(Sprite):
-    def __init__(self, start_position):
-        super().__init__()
+    def __init__(self, start_position, camera_group):
+        super().__init__(camera_group)
 
         self.hit_radius = 40
 
@@ -39,3 +39,6 @@ class Enemy(Sprite):
         self.suicide_counter -= 1
         if self.suicide_counter <= 0:
             self.kill()
+        #dist_to_player = distance(player.rect.center, self.rect.center)
+        #if dist_to_player < (self.hit_radius + player.hit_radius):
+        #    player.hit()

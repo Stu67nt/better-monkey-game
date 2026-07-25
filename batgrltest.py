@@ -68,28 +68,67 @@ class PygameApp(App):
         gadget = PygameSurfaceGadget(size=(24, 60), blitter="half")
         self.add_gadget(gadget)
 
-        pos = pygame.Vector2(50, 50)
-        vel = pygame.Vector2(2.0, 1.5)
-        radius = 15
+        player = Player((WIDTH / 2, HEIGHT / 2), (WIDTH, HEIGHT))
+        players = Group()
+        players.add(player)
+
+        enemies = Group()
+
+        player_bullets = Group()
+        test_bullet = PlayerBullet((WIDTH / 2, HEIGHT / 2), (0, 1))
+        player_bullets.add(test_bullet)
+
+        for _ in range(20):
+            e = Enemy((
+                random.randint(0, WIDTH), random.randint(0, HEIGHT)
+            ))
+            enemies.add(e)
 
         async def game_loop():
-            while True:
-                surf = gadget.surface
-                w, h = surf.get_size()
 
-                # ---- ordinary pygame code goes here ----
-                pos += vel
-                if pos.x - radius < 0 or pos.x + radius > w:
-                    vel.x *= -1
-                if pos.y - radius < 0 or pos.y + radius > h:
-                    vel.y *= -1
+            while running:
+                # poll for events
+                # pygame.QUIT event means the user clicked X to close your window
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        running = False
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        player.throw_banana(player_bullets)
 
-                surf.fill((10, 10, 20))
-                pygame.draw.circle(surf, (255, 90, 90), pos, radius)
-                # ---- end pygame code ----
+                e = Enemy((
+                    random.randint(0, WIDTH), random.randint(0, HEIGHT)
+                ))
+                enemies.add(e)
 
-                gadget.blit_surface()
-                await asyncio.sleep(1 / 30)
+                players.update(dt=dt)
+                enemies.update(player=player, dt=dt)
+                player_bullets.update(dt=dt, enemies=enemies)
+
+                hits = pygame.sprite.spritecollide(player, enemies, dokill=False)
+                for monkey in hits: player.hit(0.01)
+
+                #    hits =
+
+                # fill the screen with a color to wipe away anything from last frame
+                screen.fill("green")
+                env.tileBackground(screen, env.bg)
+                # pygame.draw.circle(screen, "orange", player_pos, 40)
+
+                players.draw(screen)
+                enemies.draw(screen)
+                player_bullets.draw(screen)
+
+                env.frame_count += 1
+                screen.blit(env.get_time_text(screen), (0, 0))
+
+                # flip() the display to put your work on screen
+                pygame.display.flip()
+
+                # limits FPS to 60
+                # dt is delta time in seconds since last frame, used for framerate-
+                # independent physics.
+
+                dt = clock.tick(FPS) / 1000
 
         asyncio.create_task(game_loop())
 
