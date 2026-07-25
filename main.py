@@ -19,7 +19,7 @@ dt = 0
 FPS = 60
 env = Environment()
 
-player = Player((WIDTH/2, HEIGHT/2))
+player = Player((WIDTH/2, HEIGHT/2), (WIDTH, HEIGHT))
 players = Group()
 players.add(player)
 
