@@ -1,4 +1,6 @@
 import math
+import random
+
 
 def move_towards(current, target, speed, dt):
     cx, cy = current
@@ -50,4 +52,16 @@ def read_highscores(path: str):
 def write_highscores(path:str, score:int):
         with open(path, "w") as f:
             f.write(str(score))
-            
+
+
+def random_coordinate_on_a_ring(center, radius, width):
+    angle = random.uniform(0, 2 * math.pi)
+
+    # Sample uniformly by area within the ring [radius, radius + width]
+    inner_sq = radius ** 2
+    outer_sq = (radius + width) ** 2
+    dist = math.sqrt(random.uniform(inner_sq, outer_sq))
+
+    x = center[0] + dist * math.cos(angle)
+    y = center[1] + dist * math.sin(angle)
+    return x, y

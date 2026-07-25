@@ -32,7 +32,7 @@ class Upgrades:
             upgrade.apply(player)
 
     def update(self, player:Player):
-
+        pass
 
 
 
@@ -48,7 +48,7 @@ class Upgrade:
 
 class SpeedUpgrade(Upgrade):
     def apply(self, player:Player):
-        player.speed = 400 + self.level * 50
+        player.speed = 200 + self.level * 50
 class FireRateUpgrade(Upgrade):
     def apply(self, player:Player):
         player.initial_shoot_cooldown = 0.2 / (self.level + 1)
@@ -56,15 +56,25 @@ class FireRateUpgrade(Upgrade):
 class Powerup(Sprite):
 
     UPGRADE_TYPE = Upgrades.SPEED
-    def __init__(self, upgrades, camera):
+    IMAGE = pygame.image.load("assets/img/powerups/speed.png")
+
+    def __init__(self, position, upgrades, camera):
         super().__init__(camera)
         self.upgrade = upgrades.upgrades[self.UPGRADE_TYPE]
 
         self.rect = Rect(0,0,70,70)
+        self.rect.center = position
 
-        self.image = pygame.image.load("assets/img/powerups/speed.png")
+        self.image = self.IMAGE
         self.image = pygame.transform.scale(self.image, self.rect.size)
-    def update(self, *args, **kwargs):
-        player = kwargs["player"]
+    def on_collect(self):
+        self.upgrade.next_level()
+        self.kill()
 
-        hits = pygame.sprite.spritecollide(player, )
+class SpeedPowerup(Powerup):
+    UPGRADE_TYPE = Upgrades.SPEED
+    IMAGE = pygame.image.load("assets/img/powerups/speed.png")
+class FireRatePowerup(Powerup):
+    UPGRADE_TYPE = Upgrades.FIRE_RATE
+    IMAGE = pygame.image.load("assets/img/powerups/firerate.png")
+
