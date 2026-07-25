@@ -9,7 +9,8 @@ from environment import Environment
 from camera import Camera
 import time
 import util
-from upgrades import Upgrades
+from upgrades import Upgrades, SpeedPowerup, random_powerup
+from util import random_coordinate_on_a_ring
 
 SCREEN_SIZE = WIDTH, HEIGHT = (1280, 720)
 
@@ -24,6 +25,7 @@ FPS = 60
 wave = 20
 current_enemy_spawn_counter = wave
 last_score = 0
+powerup_spawn_counter = random.randint(5, 10)
 die = False
 
 env = Environment()
@@ -37,6 +39,11 @@ upgrades = Upgrades()
 
 enemies = Group()
 
+powerups = Group()
+powerups.add(
+    SpeedPowerup((WIDTH/2, HEIGHT/2), upgrades, camera)
+)
+
 player_bullets = Group()
 env.start_time = time.time()
 
@@ -47,6 +54,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
+    # activate deathscreen
     if not die and player.health <= 0:
         die = True
         score = env.time_progressed()
@@ -68,6 +76,7 @@ while running:
             pygame.mixer.music.play(loops=-1)
         env.deathscreen(screen, score, old_high)
 
+    # deathscreen ig
     if die:
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE]:
@@ -82,11 +91,7 @@ while running:
             env.start_time = time.time()
             pygame.mixer.music.stop()
 
-    #e = Enemy((
-    #    random.randint(0, WIDTH), random.randint(0, HEIGHT)
-    #), camera)
-    #enemies.add(e)
-
+    # normal logic
     if not die:
         players.update(dt=dt, bullets=player_bullets)
         enemies.update(player=player, dt=dt)
@@ -100,11 +105,8 @@ while running:
                 print(env.time_progressed())
 
         upgrades.apply(player)
-
-
         players.update(dt=dt, bullets=player_bullets)
         enemies.update(player=player, dt=dt)
-      #bullets.update(dt=dt)
 
         if not env.time_progressed() == last_score:
           if env.time_progressed() % 10 == 0 and wave > 0:
@@ -113,34 +115,35 @@ while running:
 
 
         if current_enemy_spawn_counter <= 0:
-
-            enemy_x = random.randint(-800, 800)
-            if abs(enemy_x) < 600:
-                enemy_x = 600
-
-            enemy_y = random.randint(-800, 800)
-            if abs(enemy_y) < 600:
-                enemy_y = 600
-
-            e = Enemy((
-                player.rect.x + enemy_x, player.rect.y + enemy_y
-            ), camera, 700 - (wave * 10))
+            pos = random_coordinate_on_a_ring(player.rect.center, 600, 200)
+            e = Enemy(pos, camera, 700 - (wave * 30))
             enemies.add(e)
-            current_enemy_spawn_counter = wave
+            current_enemy_spawn_counter = wave/2
         else:
             current_enemy_spawn_counter -= 1
 
-        player_bullets.update(dt=dt, enemies=enemies)
+        if powerup_spawn_counter <= 0:
+            pos = random_coordinate_on_a_ring(player.rect.center, 400, 200)
 
+            powerup = random_powerup()(pos, upgrades, camera)
+            powerups.add(powerup)
+
+            powerup_spawn_counter = random.randint(10,15)
+        else:
+            powerup_spawn_counter -= dt
+
+        player_bullets.update(dt=dt, enemies=enemies)
 
         hits = pygame.sprite.spritecollide(player, enemies, dokill=False)
         for monkey in hits: player.hit(0.01)
 
-    # =====================
-    # ------RENDERING------
-    # =====================
+        hits = pygame.sprite.spritecollide(player, powerups, dokill=False)
+        for powerup in hits: powerup.on_collect()
 
-    if not die:
+        # =====================
+        # ------RENDERING------
+        # =====================
+
         env.tileBackground(screen, env.bg, camera.offset)
         screen.blit(env.get_time_text(screen), (0,0))
         camera.new_draw(player.rect, dt)
