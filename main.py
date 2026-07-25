@@ -60,7 +60,7 @@ while running:
     if current_enemy_spawn_counter <= 0:
         e = Enemy((
             random.randint(-20, WIDTH + 20), random.randint(-20, HEIGHT +20)
-        ))
+        ), camera)
         enemies.add(e)
         current_enemy_spawn_counter = wave
     else: 
@@ -78,7 +78,7 @@ while running:
 
     screen.fill("green")
     env.tileBackground(screen, env.bg, camera.offset)
-
+    screen.blit(env.get_time_text(screen), (0,0))
     camera.new_draw(player.rect)
     pygame.display.flip()
 
