@@ -41,15 +41,14 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            player.throw_banana(player_bullets)
+
 
     #e = Enemy((
     #    random.randint(0, WIDTH), random.randint(0, HEIGHT)
     #), camera)
     #enemies.add(e)
 
-    players.update(dt=dt)
+    players.update(dt=dt, bullets=player_bullets)
     enemies.update(player=player, dt=dt)
     #bullets.update(dt=dt)
 
