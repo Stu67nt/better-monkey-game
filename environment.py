@@ -1,6 +1,8 @@
 import pygame
 import math
 import time
+import util
+
 
 class Environment:
 	def __init__(self):
@@ -8,7 +10,7 @@ class Environment:
 		self.bg = pygame.image.load("assets/img/grass.png")
 		self.start_time = 0
 		self.bg = pygame.transform.scale_by(self.bg, 5)
-
+		pygame.mixer.init()
 		pygame.font.init()
 
 	def time_progressed(self) -> int:
@@ -36,3 +38,24 @@ class Environment:
 	def healthbar(self, screen, player_health):
 		pygame.draw.rect(screen, (0, 0 ,0), (0, screen.get_height() - 50, screen.get_width(), 50))
 		pygame.draw.rect(screen, (255, 0 ,0), (0, screen.get_height() - 50, round(screen.get_width()*(player_health/100)), 50))
+
+	def deathscreen(self, screen, score, old_high):
+		screen.fill("black")
+		win = pygame.image.load("assets/img/deathscreens/death.png")
+		win_rect = win.get_rect(topleft=(0, 0))
+		screen.blit(win, win_rect)
+		if old_high < self.time_progressed():
+			win_msg = self.time_font.render(f"You beat your high score!", True, (255, 255, 255))
+			win_msg_score = self.time_font.render(f"New score: {max(util.read_highscores("scores.txt"))}", True, (255, 255, 255))
+			restart_msg = self.time_font.render(f"Press space to restart", True, (255, 255, 255))
+			screen.blit(win_msg, (500, 500))
+			screen.blit(win_msg_score, (500, 550))
+			screen.blit(restart_msg, (500, 600))
+		else:
+			win_msg = self.time_font.render(f"You didn't beat your high score!", True, (255, 255, 255))
+			win_msg_score = self.time_font.render(f"Your score: {score}", True,
+												  (255, 255, 255))
+			restart_msg = self.time_font.render(f"Press space to restart", True, (255, 255, 255))
+			screen.blit(win_msg, (500, 500))
+			screen.blit(win_msg_score, (500, 550))
+			screen.blit(restart_msg, (500, 600))
