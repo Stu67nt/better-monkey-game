@@ -11,7 +11,7 @@ class PlayerBullet(Sprite):
 
         self.direction_vector = vector
         self.rect = Rect(
-            0,0,80,80
+            0,0,50,50
         )
         self.rect.center = start_position
 
@@ -22,7 +22,7 @@ class PlayerBullet(Sprite):
 
         self.rotation = 0
 
-        self.speed = 120
+        self.speed = 250
 
     def update_image(self):
         self.image = pygame.transform.rotate(self.initial_image, self.rotation)

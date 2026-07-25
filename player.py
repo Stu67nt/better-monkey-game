@@ -56,6 +56,8 @@ class Player(Sprite):
 
     def throw_banana(self, banana_group):
         mouse = pygame.mouse.get_pos()
+        mouse = (mouse[0]+self.camera_group.offset[0], mouse[1]+self.camera_group.offset[1])
+
         mouse_direction = direction_to(self.rect.center, mouse)
         banana_group.add(PlayerBullet(
            self.rect.center, mouse_direction, self.camera_group
