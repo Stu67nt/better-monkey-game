@@ -57,8 +57,6 @@ while running:
         if env.time_progressed() % 10 == 0 and wave > 0:
             wave -= 1
             last_score = env.time_progressed()
-            print(wave)
-            print(env.time_progressed())
 
     if current_enemy_spawn_counter <= 0:
 
