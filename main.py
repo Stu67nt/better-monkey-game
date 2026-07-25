@@ -1,6 +1,10 @@
 import random
 import pygame
+from pygame import Vector2
+from pygame.sprite import Group
+from bullet import Bullet
 from enemy import Enemy
+from player import Player
 from environment import Environment
 
 SCREEN_SIZE = WIDTH, HEIGHT = (1280, 720)
@@ -14,15 +18,21 @@ dt = 0
 FPS = 60
 env = Environment(clock, FPS)
 
-player_pos = pygame.Vector2(WIDTH / 2, HEIGHT / 2)
+player = Player((WIDTH/2, HEIGHT/2))
+players = Group()
+players.add(player)
 
-enemies = []
+enemies = Group()
 
+bullets = Group()
+test_bullet = Bullet((WIDTH/2, HEIGHT/2), (0,1))
+bullets.add(test_bullet)
 
 for _ in range(20):
-    enemies.append(Enemy(pygame.Vector2(
+    e = Enemy((
         random.randint(0,WIDTH), random.randint(0,HEIGHT)
-    )))
+    ))
+    enemies.add(e)
 
 
 
@@ -33,40 +43,20 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-            
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_w]:
-        if keys[pygame.K_a] or keys[pygame.K_s] or keys[pygame.K_d]:
-            player_pos.y -= 300 * dt * 0.7
-        else:
-            player_pos.y -= 300 * dt
-    if keys[pygame.K_s]:
-        if keys[pygame.K_a] or keys[pygame.K_w] or keys[pygame.K_d]:
-            player_pos.y += 300 * dt * 0.7
-        else:
-            player_pos.y += 300 * dt
-    if keys[pygame.K_a]:
-        if keys[pygame.K_w] or keys[pygame.K_s] or keys[pygame.K_d]:
-            player_pos.x -= 300 * dt * 0.7
-        else:
-            player_pos.x -= 300 * dt
-    if keys[pygame.K_d]:
-        if keys[pygame.K_a] or keys[pygame.K_s] or keys[pygame.K_w]:
-            player_pos.x += 300 * dt * 0.7
-        else:
-            player_pos.x += 300 * dt
 
-    for e in enemies:
-        e.update(player_pos, dt)
+    players.update(dt=dt)
+    enemies.update(player=player, dt=dt)
+    bullets.update(dt=dt)
 
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("green")
     env.tileBackground(screen, env.bg)
-    pygame.draw.circle(screen, "orange", player_pos, 40)
+    # pygame.draw.circle(screen, "orange", player_pos, 40)
 
 
-    for e in enemies:
-        e.render(screen)
+    players.draw(screen)
+    enemies.draw(screen)
+    bullets.draw(screen)
 
     env.frame_count += 1
     screen.blit(env.get_time_text(screen), (0, 0))
