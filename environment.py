@@ -5,7 +5,7 @@ import time
 class Environment:
 	def __init__(self):
 		self.time_font = pygame.font.SysFont('Arial', 30)
-		self.bg = pygame.image.load("assets\\img\\grass.png")
+		self.bg = pygame.image.load("assets/img/grass.png")
 		self.start_time = 0
 		self.bg = pygame.transform.scale_by(self.bg, 5)
 
@@ -33,3 +33,6 @@ class Environment:
 			for y in range(tilesY):
 				screen.blit(image, (x * imageWidth - xTileOffset, y * imageHeight - yTileOffset))
 
+	def healthbar(self, screen, player_health):
+		pygame.draw.rect(screen, (0, 0 ,0), (0, screen.get_height() - 50, screen.get_width(), 50))
+		pygame.draw.rect(screen, (255, 0 ,0), (0, screen.get_height() - 50, round(screen.get_width()*(player_health/100)), 50))
