@@ -68,7 +68,7 @@ while running:
 
     # screen.blit(env.get_time_text(screen), (0, 0))
 
-    camera.new_draw(player.rect)
+    camera.new_draw(player.rect, dt)
     # flip() the display to put your work on screen
     pygame.display.flip()
 
