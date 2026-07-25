@@ -50,7 +50,7 @@ class Environment:
 			win_msg = self.time_font.render(f"You beat your high score!", True, (255, 255, 255))
 			win_msg_score = self.time_font.render(f"New score: {max(util.read_highscores("scores.txt"))}", True, (255, 255, 255))
 			restart_msg = self.time_font.render(f"Press space to restart", True, (255, 255, 255))
-			credits = self.time_font.render("made by @Joko26, @Stunt and @Fedor", True,  (255, 255, 255))
+			credits = self.time_font.render("made by @Joko26, @Stunt and @Fedi41", True,  (255, 255, 255))
 			screen.blit(win_msg, (500, 500))
 			screen.blit(win_msg_score, (500, 550))
 			screen.blit(restart_msg, (500, 600))
@@ -60,7 +60,7 @@ class Environment:
 			win_msg_score = self.time_font.render(f"Your score: {score}", True,
 												  (255, 255, 255))
 			restart_msg = self.time_font.render(f"Press space to restart", True, (255, 255, 255))
-			credits = self.time_font.render("made by @Joko26, @Stunt and @Fedor", True,  (255, 255, 255))
+			credits = self.time_font.render("made by @Joko26, @Stunt and @Fedi41", True,  (255, 255, 255))
 			screen.blit(win_msg, (500, 500))
 			screen.blit(win_msg_score, (500, 550))
 			screen.blit(restart_msg, (500, 600))
