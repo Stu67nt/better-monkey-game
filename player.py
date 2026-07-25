@@ -60,6 +60,8 @@ class Player(Sprite):
             else:
                 self.rect.x += self.speed * dt
 
+            self.mirror_texture = True
+
         if pygame.mouse.get_pressed(3)[0]:
             self.throw_banana(bullets_group)
 
