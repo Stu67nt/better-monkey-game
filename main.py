@@ -18,6 +18,10 @@ clock = pygame.time.Clock()
 running = True
 dt = 0
 FPS = 60
+wave = 20
+current_enemy_spawn_counter = wave
+frame_count = 0
+
 env = Environment()
 camera = Camera(screen)
 
@@ -48,25 +52,32 @@ while running:
 
     players.update(dt=dt)
     enemies.update(player=player, dt=dt)
+    #bullets.update(dt=dt)
+
+    if env.time_progressed() % 5 == 0:
+        wave -= 1
+
+    if current_enemy_spawn_counter <= 0:
+        e = Enemy((
+            random.randint(-20, WIDTH + 20), random.randint(-20, HEIGHT +20)
+        ))
+        enemies.add(e)
+        current_enemy_spawn_counter = wave
+    else: 
+        current_enemy_spawn_counter -= 1
+
     player_bullets.update(dt=dt, enemies=enemies)
 
 
     hits = pygame.sprite.spritecollide(player, enemies, dokill=False)
     for monkey in hits: player.hit(0.01)
 
-#    hits =
+    # =====================
+    # ------RENDERING------
+    # =====================
 
-    # fill the screen with a color to wipe away anything from last frame
     screen.fill("green")
-    env.tileBackground(screen, env.bg)
-    # pygame.draw.circle(screen, "orange", player_pos, 40)
-
-
-    #players.draw(screen)
-    #enemies.draw(screen)
-    #player_bullets.draw(screen)
-
-    # screen.blit(env.get_time_text(screen), (0, 0))
+    env.tileBackground(screen, env.bg, camera.offset)
 
     camera.new_draw(player.rect, dt)
     # flip() the display to put your work on screen
