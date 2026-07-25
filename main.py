@@ -92,6 +92,7 @@ while running:
     env.tileBackground(screen, env.bg, camera.offset)
     screen.blit(env.get_time_text(screen), (0,0))
     camera.new_draw(player.rect, dt)
+    env.healthbar(screen, player.health)
     pygame.display.flip()
 
     # limits FPS to 60

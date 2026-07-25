@@ -33,3 +33,6 @@ class Environment:
 			for y in range(tilesY):
 				screen.blit(image, (x * imageWidth - xTileOffset, y * imageHeight - yTileOffset))
 
+	def healthbar(self, screen, player_health):
+		pygame.draw.rect(screen, (0, 0 ,0), (0, screen.get_height() - 50, screen.get_width(), 50))
+		pygame.draw.rect(screen, (255, 0 ,0), (0, screen.get_height() - 50, round(screen.get_width()*(player_health/100)), 50))
