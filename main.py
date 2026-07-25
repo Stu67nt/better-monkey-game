@@ -9,6 +9,7 @@ from environment import Environment
 from camera import Camera
 import time
 import util
+from upgrades import Upgrades
 
 SCREEN_SIZE = WIDTH, HEIGHT = (1280, 720)
 
@@ -31,6 +32,8 @@ player = Player((WIDTH/2, HEIGHT/2), (WIDTH, HEIGHT), camera)
 players = Group()
 players.add(player)
 
+upgrades = Upgrades()
+
 enemies = Group()
 
 player_bullets = Group()
@@ -48,6 +51,8 @@ while running:
     #    random.randint(0, WIDTH), random.randint(0, HEIGHT)
     #), camera)
     #enemies.add(e)
+    upgrades.apply(player)
+
 
     players.update(dt=dt, bullets=player_bullets)
     enemies.update(player=player, dt=dt)

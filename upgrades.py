@@ -42,8 +42,8 @@ class Upgrade:
 
 class SpeedUpgrade(Upgrade):
     def apply(self, player:Player):
-        player.speed = 100 + self.level * 50
+        player.speed = 400 + self.level * 50
 class FireRateUpgrade(Upgrade):
     def apply(self, player:Player):
-        player.shoot_cooldown = 1 / (self.level + 1)
+        player.initial_shoot_cooldown = 0.2 / (self.level + 1)
 
