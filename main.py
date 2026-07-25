@@ -1,12 +1,11 @@
 import random
-
 import pygame
 from pygame import Vector2
 from pygame.sprite import Group
-
 from bullet import Bullet
 from enemy import Enemy
 from player import Player
+from environment import Environment
 
 SCREEN_SIZE = WIDTH, HEIGHT = (1280, 720)
 
@@ -16,6 +15,8 @@ screen = pygame.display.set_mode(SCREEN_SIZE)
 clock = pygame.time.Clock()
 running = True
 dt = 0
+FPS = 60
+env = Environment(clock, FPS)
 
 player = Player((WIDTH/2, HEIGHT/2))
 players = Group()
@@ -48,12 +49,17 @@ while running:
     bullets.update(dt=dt)
 
     # fill the screen with a color to wipe away anything from last frame
-    screen.fill("white")
-    #pygame.draw.circle(screen, "green", player.pos, 40)
+    screen.fill("green")
+    env.tileBackground(screen, env.bg)
+    # pygame.draw.circle(screen, "orange", player_pos, 40)
+
 
     players.draw(screen)
     enemies.draw(screen)
     bullets.draw(screen)
+
+    env.frame_count += 1
+    screen.blit(env.get_time_text(screen), (0, 0))
 
     # flip() the display to put your work on screen
     pygame.display.flip()
@@ -61,6 +67,7 @@ while running:
     # limits FPS to 60
     # dt is delta time in seconds since last frame, used for framerate-
     # independent physics.
-    dt = clock.tick(60) / 1000
+
+    dt = clock.tick(FPS) / 1000
 
 pygame.quit()
