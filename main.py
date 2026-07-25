@@ -99,14 +99,14 @@ while running:
                 print(wave)
                 print(env.time_progressed())
 
-      upgrades.apply(player)
+        upgrades.apply(player)
 
 
-      players.update(dt=dt, bullets=player_bullets)
-      enemies.update(player=player, dt=dt)
+        players.update(dt=dt, bullets=player_bullets)
+        enemies.update(player=player, dt=dt)
       #bullets.update(dt=dt)
 
-      if not env.time_progressed() == last_score:
+        if not env.time_progressed() == last_score:
           if env.time_progressed() % 10 == 0 and wave > 0:
               wave -= 1
               last_score = env.time_progressed()
