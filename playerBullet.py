@@ -22,7 +22,7 @@ class PlayerBullet(Sprite):
 
         self.rotation = 0
 
-        self.speed = 250
+        self.speed = 450
 
     def update_image(self):
         self.image = pygame.transform.rotate(self.initial_image, self.rotation)
