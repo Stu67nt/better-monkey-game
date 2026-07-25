@@ -31,3 +31,11 @@ def direction_to(a, b):
     if length == 0:
         return delta
     return [d / length for d in delta]
+
+def clamp(n, min, max):
+    if n < min:
+        return min
+    elif n > max:
+        return max
+    else:
+        return n
