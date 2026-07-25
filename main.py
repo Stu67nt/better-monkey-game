@@ -79,7 +79,8 @@ while running:
     screen.fill("green")
     env.tileBackground(screen, env.bg, camera.offset)
 
-    camera.new_draw(player.rect)
+    camera.new_draw(player.rect, dt)
+    # flip() the display to put your work on screen
     pygame.display.flip()
 
     # limits FPS to 60
