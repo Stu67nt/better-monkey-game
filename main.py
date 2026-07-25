@@ -1,8 +1,6 @@
 import random
 import pygame
-from pygame import Vector2
 from pygame.sprite import Group
-from playerBullet import PlayerBullet
 from enemy import Enemy
 from player import Player
 from environment import Environment
@@ -40,9 +38,6 @@ upgrades = Upgrades()
 enemies = Group()
 
 powerups = Group()
-powerups.add(
-    SpeedPowerup((WIDTH/2, HEIGHT/2), upgrades, camera)
-)
 
 player_bullets = Group()
 env.start_time = time.time()
