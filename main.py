@@ -32,7 +32,7 @@ players.add(player)
 
 enemies = Group()
 
-player_bullets = Group()sss
+player_bullets = Group()
 env.start_time = time.time()
 
 while running:
