@@ -7,3 +7,4 @@ Todo
 - upgardes
 - persistant high scores
 - player facing stuff 
+- healthbar
