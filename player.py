@@ -3,7 +3,7 @@ from pygame import Vector2
 from pygame.sprite import Sprite
 
 from playerBullet import PlayerBullet
-from util import direction_to
+from util import direction_to, resource_path
 
 
 class Player(Sprite):
@@ -21,7 +21,7 @@ class Player(Sprite):
 
         self.rect = pygame.Rect(0,0,self.hit_radius*2, self.hit_radius*2)
 
-        self.initial_image = pygame.image.load("assets/img/banana.png")
+        self.initial_image = pygame.image.load(resource_path("assets/img/banana.png"))
         self.initial_image = pygame.transform.scale(self.initial_image, self.rect.size)
         self.image = self.initial_image
 

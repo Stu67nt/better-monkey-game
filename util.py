@@ -1,4 +1,7 @@
 import math
+import sys, os
+import random
+
 
 def move_towards(current, target, speed, dt):
     cx, cy = current
@@ -40,14 +43,50 @@ def clamp(n, min, max):
     else:
         return n
     
+def get_writable_path(filename: str) -> str:
+    if getattr(sys, "frozen", False):
+        base = os.path.dirname(sys.executable)
+    else:
+        base = os.path.abspath(".")
+    return os.path.join(base, filename)
+
+
 def read_highscores(path: str):
     scores = []
-    with open(path, "r") as f:
-        for line in f.readlines():
-            scores.append(int(line))
+    if not os.path.exists(path):
         return scores
 
-def write_highscores(path:str, score:int):
-        with open(path, "w") as f:
-            f.write(str(score))
+    with open(path, "r") as f:
+        for line in f.readlines():
+            line = line.strip()
+            if line:
+                scores.append(int(line))
+    return scores
+
+
+def write_highscores(path: str, score: int):
+    with open(path, "w") as f:
+        f.write(str(score))
             
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except AttributeError:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+def write_highscores(path:str, score:int):
+    with open(path, "w") as f:
+        f.write(str(score))
+
+
+def random_coordinate_on_a_ring(center, radius, width):
+    angle = random.uniform(0, 2 * math.pi)
+
+    # Sample uniformly by area within the ring [radius, radius + width]
+    inner_sq = radius ** 2
+    outer_sq = (radius + width) ** 2
+    dist = math.sqrt(random.uniform(inner_sq, outer_sq))
+
+    x = center[0] + dist * math.cos(angle)
+    y = center[1] + dist * math.sin(angle)
+    return x, y

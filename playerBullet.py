@@ -2,7 +2,7 @@ import pygame.image
 from pygame import Rect
 from pygame.sprite import Sprite
 
-from util import distance
+from util import distance, resource_path
 
 
 class PlayerBullet(Sprite):
@@ -16,13 +16,15 @@ class PlayerBullet(Sprite):
         self.rect.center = start_position
 
 
-        self.initial_image = pygame.image.load("assets/img/banana.png")
+        self.initial_image = pygame.image.load(resource_path("assets/img/banana.png"))
         self.initial_image = pygame.transform.scale(self.initial_image, self.rect.size)
         self.image = self.initial_image
 
         self.rotation = 0
 
         self.speed = 450
+
+        self.distance_traveled = 0
 
     def update_image(self):
         self.image = pygame.transform.rotate(self.initial_image, self.rotation)
@@ -33,6 +35,9 @@ class PlayerBullet(Sprite):
         dt = kwargs["dt"]
         enemies = kwargs["enemies"]
         self.rect.center = (self.rect.center[0]+self.direction_vector[0]*dt*self.speed,self.rect.center[1]+self.direction_vector[1]*dt*self.speed)
+        self.distance_traveled += dt * self.speed
+        if self.distance_traveled > 1500: self.kill()
+
 
         hits = pygame.sprite.spritecollide(self, enemies, dokill=False)
         for e in hits:
@@ -40,6 +45,8 @@ class PlayerBullet(Sprite):
             if dist < (self.rect.width+e.rect.width)/2:
                 e.kill()
                 self.kill()
+
+
 
         self.rotation += 100*dt
         self.update_image()
